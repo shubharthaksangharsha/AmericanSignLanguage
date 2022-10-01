@@ -6,6 +6,14 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 
+def create_y_labels(test_data):
+    y_labels = []
+    num_of_examples = len(test_data.filenames)
+    num_of_generator_calls = math.ceil(num_of_examples / (1.0 * 32))
+    for i in range(0, int(num_of_generator_calls)):
+        y_labels.extend(np.array(test_data[i][1]))
+    return y_labels
+
 def preprocess(img):
     img = tf.image.decode_image(img)
     img = tf.image.resize(img, (224, 224))
@@ -41,13 +49,6 @@ def save_model(model, no=1):
     model.save(name)
 
 
-def create_y_labels(test_data):
-    y_labels = []
-    num_of_examples = len(test_data.filenames)
-    num_of_generator_calls = math.ceil(num_of_examples / (1.0 * 32))
-    for i in range(0, int(num_of_generator_calls)):
-        y_labels.extend(np.array(test_data[i][1]))
-    return y_labels
 
 # Plot the validation and training data separately
 def plot_loss_curves(history, filename):
