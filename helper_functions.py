@@ -45,21 +45,27 @@ def predict_and_plot(model, filename, classes):
 def save_model(model, no=1):
     if not os.path.exists("./Models"):
         os.mkdir("./Models")
-    name = f"./Models/model{no}.h5"
+    if not os.path.exists(f"./Models/model{no}"):
+        os.mkdir(f"./Models/model{no}")
+    name = f"./Models/model{no}/model{no}.h5"
     model.save(name)
 
 
-
 # Plot the validation and training data separately
-def plot_loss_curves(history, filename):
+def plot_loss_curves(history, no=1):
   """
   Returns separate loss curves for training and validation metrics.
 
   Args:
     history: TensorFlow model History object (see: https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/History)
   """
-  loss_filename = filename + "/loss.png"
-  accuracy_filename = filename + "/accuracy.png"
+  if not os.path.exists("./Models"):
+      os.mkdir("./Models")
+  if not os.path.exists(f"./Models/model{no}"):
+      os.mkdir(f"./Models/model{no}")
+
+  loss_filename = f"./Models/model{no}/loss.png"
+  accuracy_filename = f"./Models/model{no}/accuracy.png"
   loss = history.history['loss']
   val_loss = history.history['val_loss']
 
@@ -97,7 +103,7 @@ from sklearn.metrics import confusion_matrix
 
 
 # Our function needs a different name to sklearn's plot_confusion_matrix
-def make_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, norm=False, savefig=False):
+def make_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, norm=False, savefig=True, no=1):
     """Makes a labelled confusion matrix comparing predictions and ground truth labels.
 
     If classes is passed, confusion matrix will be labelled, if not, integer class values
@@ -169,7 +175,7 @@ def make_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_s
 
     # Save the figure to the current working directory
     if savefig:
-        fig.savefig("./Models/confusion_matrix.png")
+        fig.savefig(f"./Models/model{no}/confusion_matrix{no}.png")
 
 
 

@@ -6,7 +6,7 @@ import time
 import tensorflow as tf
 from helper_functions import preprocess_filename
 
-model = tf.keras.models.load_model("./Models/model4.h5")
+model = tf.keras.models.load_model("./Models/model1/model1.h5")
 cap = cv2.VideoCapture(1)
 detector = HandDetector(minTrackCon=0.5, maxHands=1)
 
