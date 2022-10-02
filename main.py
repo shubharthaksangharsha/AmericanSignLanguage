@@ -1,3 +1,5 @@
+import string
+
 import cv2
 import numpy as np
 from cvzone.HandTrackingModule import HandDetector
@@ -6,7 +8,7 @@ import time
 import tensorflow as tf
 from helper_functions import preprocess_filename
 
-model = tf.keras.models.load_model("./Models/model3/model3.h5")
+model = tf.keras.models.load_model("./Models/model4/model4.h5")
 cap = cv2.VideoCapture(1)
 detector = HandDetector(minTrackCon=0.5, maxHands=1)
 
@@ -14,7 +16,8 @@ imgSize = 300
 offset = 20
 counter = 0
 
-classes = ['A', 'B', 'C', 'D', "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
+classes = list(string.ascii_uppercase)
+print(classes)
 while True:
     success, img = cap.read()
     # img = cv2.flip(img, 1)
